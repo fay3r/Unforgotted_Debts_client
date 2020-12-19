@@ -1,45 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="70dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp">
-
-        <TextView
-            android:id="@+id/table"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="14dp"
-            android:text="Stoł "
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        android:layout_margin="4dp"
+        android:background="#ff5757">
 
         <TextView
             android:id="@+id/tableName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="113dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="78dp"
+            android:layout_marginTop="1dp"
             android:layout_toEndOf="@+id/table"
             android:text=" nazwa"
-
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/owner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/table"
-            android:layout_marginTop="7dp"
-            android:text="Własciciel"
+            android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -49,13 +30,40 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tableName"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="61dp"
-            android:layout_marginTop="49dp"
+            android:layout_marginStart="99dp"
+            android:layout_marginTop="28dp"
             android:layout_toEndOf="@+id/owner"
             android:text=" nick"
-
+            android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/table"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="1dp"
+            android:text="Własciciel"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="1dp"
+            android:text="Nazwa stolu "
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

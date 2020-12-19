@@ -31,9 +31,8 @@ public class TableActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         title = findViewById(R.id.tabTitle);
-        Intent intent = new Intent();
-        System.out.println(intent.getStringExtra("TABLE_NAME"));
-        title.setText("asd");
+        Intent intent = getIntent();
+        title.setText(intent.getStringExtra("TABLE_NAME"));
 
     }
 }

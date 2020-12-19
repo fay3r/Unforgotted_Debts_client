@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_tables"
         android:name="com.example.udclient.ui.tables.TablesFragment"
         android:label="@string/menu_tables"
-        tools:layout="@layout/fragment_listoftables" />
+        tools:layout="@layout/fragment_tables" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_summary"
         android:name="com.example.udclient.ui.summary.SummaryFragment"
         android:label="@string/menu_summary"
         tools:layout="@layout/fragment_summary" />
