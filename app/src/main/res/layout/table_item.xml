@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <TextView
+            android:id="@+id/table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="14dp"
+            android:text="Stoł "
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tableName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="113dp"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@+id/table"
+            android:text=" nazwa"
+
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/table"
+            android:layout_marginTop="7dp"
+            android:text="Własciciel"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ownerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tableName"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="61dp"
+            android:layout_marginTop="49dp"
+            android:layout_toEndOf="@+id/owner"
+            android:text=" nick"
+
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
