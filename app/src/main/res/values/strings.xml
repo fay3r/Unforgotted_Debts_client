@@ -7,7 +7,7 @@
     <string name="nick">Nick</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
-    <string name="already">Already signed in?</string>
+    <string name="already">Create new account</string>
     <string name="example_mail">examplemail@email.com</string>
     <string name="title_activity_navi__drawer">Navi_Drawer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -16,7 +16,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    <string name="mailTo">unforgottendebts@gmail.com</string>
     <string name="menu_home">nie sprecyzowany</string>
     <string name="menu_tables">Moje stoły</string>
     <string name="menu_summary">Summary</string>
