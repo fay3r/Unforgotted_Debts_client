@@ -9,7 +9,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="already">Create new account</string>
     <string name="example_mail">examplemail@email.com</string>
-    <string name="title_activity_navi__drawer">Navi_Drawer</string>
+    <string name="title_activity_navi__drawer">Unforgotten Debts</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -25,5 +25,5 @@
     <string name="people">Uczestnicy</string>
     <string name="add">Dodaj</string>
     <string name="crate_new">Stworz</string>
-    <string name="name">Nazwa</string>
+    <string name="name">Name</string>
 </resources>

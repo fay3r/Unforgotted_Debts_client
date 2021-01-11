@@ -82,13 +82,19 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         drawerEmailField = headerView.findViewById(R.id.drawerEmail);
         drawerEmailField.setText(email);
 
-        drawerNickField = headerView.findViewById(R.id.drawerNick);
-        drawerNickField.setText(nick);
+       // drawerNickField = headerView.findViewById(R.id.drawerNick);
+        //drawerNickField.setText("Unforgotten debts");
 
         list = new ArrayList<>();
         list.add(new TableItem("Imprezka","gracjan","12345","123"));
         list.add(new TableItem("Osiemnastka","horwacy","54321","321"));
         list.add(new TableItem("Kawalerski","kazek","98765","lolek"));
+        list.add(new TableItem("Kawalerski2","misiek","9452","lolek"));
+        list.add(new TableItem("Kawalerski3","dzbanek","91254","lolek"));
+        list.add(new TableItem("Kawalerski4","krycha","96874","lolek"));
+        list.add(new TableItem("Kawalerski5","gruby","95632","lolek"));
+        list.add(new TableItem("Kawalerski6","domel","92456","lolek"));
+        list.add(new TableItem("Kawalerski7","jjes","94786","lolek"));
 
     }
 
@@ -97,15 +103,15 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle("Unforgotten Debts");
-        builder.setMessage("Czy napewno chcesz sie wylogowac?");
-        builder.setPositiveButton("A i owszem",
+        builder.setMessage("Are you sure you want to log out?");
+        builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Navi_Drawer.super.onBackPressed();
                     }
                 });
-        builder.setNegativeButton("Nie nie, cofaj!", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No stay logged", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

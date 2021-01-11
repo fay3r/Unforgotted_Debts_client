@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="45dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="4dp">
 
@@ -9,60 +9,80 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="4dp"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/backgroundtextfields"
+        >
 
         <TextView
             android:id="@+id/tableName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="78dp"
-            android:layout_marginTop="1dp"
-            android:layout_toEndOf="@+id/table"
-            android:text=" nazwa"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="132dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="150dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
+            android:text="nazwa"
+            android:textAlignment="center"
+            android:textColor="@color/main_theme_color"
+            android:textSize="15dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/ownerName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/tableName"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="99dp"
-            android:layout_marginTop="28dp"
-            android:layout_toEndOf="@+id/owner"
-            android:text=" nick"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="300dp"
+            android:layout_marginBottom="0dp"
+            android:height="20dp"
+            android:gravity="center"
+            android:text="nick"
+            android:textAlignment="center"
+            android:textColor="@color/main_theme_color"
+            android:textSize="15dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/owner"
+            android:id="@+id/details"
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/table"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="1dp"
-            android:text="Własciciel"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/table"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="1dp"
-            android:text="Nazwa stolu "
-            android:textColor="#ffffff"
-            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="292dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginBottom="0dp"
+            android:text="Details"
+            android:textColor="@color/main_theme_color"
+            android:textSize="15dp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="347dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="33dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rightarrow" />
 
     </RelativeLayout>
 
