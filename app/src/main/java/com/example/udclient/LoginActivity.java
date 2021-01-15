@@ -9,10 +9,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.udclient.classes.LoginDto;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText email,password;
     private Intent intent;
+    private HttpSevice httpSevice;
+    private static String url = "http://192.168.0.121:8080/";
 
 
     @Override
@@ -22,21 +35,36 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         loadData();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        httpSevice = retrofit.create(HttpSevice.class);
 
 
     }
 
     public void logInApp(View view) {
-        if (!email.getText().toString().replace(" ", "").isEmpty()) {
-            //if(password.getText().toString().equals("razdwatrzy")) {                                //haslo do pobrania
-                intent = new Intent(this, Navi_Drawer.class);
-                intent.putExtra("LOGIN_NAME", "fayer");
-                intent.putExtra("EMAIL", email.getText().toString());
-                saveData(email.getText().toString());
+        intent = new Intent(this,Navi_Drawer.class);
+        Call<Map<String,String>> call = httpSevice.login(new LoginDto(email.getText().toString(),password.getText().toString()));
+        //System.out.println("dziala2");
+        call.enqueue(new Callback<Map<String,String>>() {
+            @Override
+            public void onResponse(Call<Map<String,String>> call, Response<Map<String,String>> response) {
 
-                startActivity(intent);
-           // }
-        }
+                if( response.code()== 200) {
+                    intent.putExtra("LOGIN_NAME", response.body().get("nick"));
+                    intent.putExtra("EMAIL", email.getText().toString());
+                    intent.putExtra("ID_PERSON",response.body().get("user_id"));
+                    saveData(email.getText().toString());
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String,String>> call, Throwable t) {
+                System.out.println("asdasdasda" + t.getMessage());
+
+            }
+        });
+
     }
 
     public void goToRegistration(View view) {

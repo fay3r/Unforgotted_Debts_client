@@ -1,5 +1,6 @@
 package com.example.udclient.ui.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.udclient.R;
+import com.example.udclient.classes.MeetingDetailsDto;
+import com.example.udclient.classes.MeetingListDto;
+import com.example.udclient.classes.TableAdapter;
+import com.example.udclient.classes.TableUserAdapter;
 
 
 /**
@@ -21,7 +28,10 @@ import com.example.udclient.R;
 public class UsersFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-
+    private RecyclerView recyclerView;
+    private TableUserAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private MeetingDetailsDto meetingDetailsDto;
 
     public static UsersFragment newInstance(int index) {
         UsersFragment fragment = new UsersFragment();
@@ -45,7 +55,23 @@ public class UsersFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_users, container, false);
-        final TextView textView = root.findViewById(R.id.section_label);
+
+
+
+        recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        adapter = new TableUserAdapter(meetingDetailsDto.getPersonMeetingList());
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemListener(new TableUserAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+            }
+        });
 
         return root;
     }

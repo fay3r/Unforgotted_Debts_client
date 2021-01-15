@@ -11,7 +11,11 @@ import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.udclient.classes.LoginDto;
+import com.example.udclient.classes.MeetingDetailsDto;
+import com.example.udclient.classes.MeetingListDto;
 import com.example.udclient.classes.TableItem;
+import com.example.udclient.ui.TableActivity;
 import com.example.udclient.ui.home.HomeFragment;
 import com.example.udclient.ui.summary.SummaryFragment;
 import com.example.udclient.ui.tables.TablesFragment;
@@ -33,17 +37,24 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private String nick,email;
+    private String nick,email,idPerson;
     private TextView drawerNickField, drawerEmailField;
-    private ArrayList<TableItem> list;
     private EditText tableName, tablePassword;
     private TablesFragment tablesFragment;
     private SummaryFragment summaryFragment;
     private HomeFragment homeFragment;
     private  DrawerLayout drawer;
+    private HttpSevice httpSevice;
+    private static String url = "http://192.168.0.121:8080/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +89,8 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         Intent intent = getIntent();
         nick=intent.getStringExtra("LOGIN_NAME");
         email=intent.getStringExtra("EMAIL");
+        idPerson=intent.getStringExtra("ID_PERSON");
+        System.out.println("dane uzytkownika "+  nick + email + idPerson);;
 
         drawerEmailField = headerView.findViewById(R.id.drawerEmail);
         drawerEmailField.setText(email);
@@ -85,16 +98,8 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
        // drawerNickField = headerView.findViewById(R.id.drawerNick);
         //drawerNickField.setText("Unforgotten debts");
 
-        list = new ArrayList<>();
-        list.add(new TableItem("Imprezka","gracjan","12345","123"));
-        list.add(new TableItem("Osiemnastka","horwacy","54321","321"));
-        list.add(new TableItem("Kawalerski","kazek","98765","lolek"));
-        list.add(new TableItem("Kawalerski2","misiek","9452","lolek"));
-        list.add(new TableItem("Kawalerski3","dzbanek","91254","lolek"));
-        list.add(new TableItem("Kawalerski4","krycha","96874","lolek"));
-        list.add(new TableItem("Kawalerski5","gruby","95632","lolek"));
-        list.add(new TableItem("Kawalerski6","domel","92456","lolek"));
-        list.add(new TableItem("Kawalerski7","jjes","94786","lolek"));
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        httpSevice = retrofit.create(HttpSevice.class);
 
     }
 
@@ -134,6 +139,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         View mView = inflater.inflate(R.layout.dialog_newtable,null);
         tableName = mView.findViewById(R.id.newTableName);
         tablePassword = mView.findViewById(R.id.newTablePassword);
+        Intent intent = new Intent(this, TableActivity.class);
 
         builder.setView(mView).setTitle("Nowy stół")
                 .setPositiveButton("Stwórz", new DialogInterface.OnClickListener() {
@@ -141,7 +147,21 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         System.out.println(tableName.getText().toString() + " adsada"  +tablePassword.getText().toString());
-                        list.add(new TableItem(tableName.getText().toString(),nick));
+                        Call<Void> call = httpSevice.createMeeting(tableName.getText().toString(),tablePassword.getText().toString());
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if(response.code()==200){
+                                    intent.putExtra("TABLE_NAME", tableName.getText().toString());
+                                    startActivity(intent);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                System.err.println(t.getMessage());
+                            }
+                        });
                     }
                 })
                 .setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
@@ -159,10 +179,21 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         if(item.getItemId() == R.id.nav_tables){
             TablesFragment mFrag = new TablesFragment();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("LIST",list);   //parameters are (key, value).
-            mFrag.setArguments(bundle);
+            Call<MeetingListDto> call = httpSevice.getPersonsMeetingList(idPerson);
+            call.enqueue(new Callback<MeetingListDto>() {
+                @Override
+                public void onResponse(Call<MeetingListDto> call, Response<MeetingListDto> response) {
+                    MeetingListDto meetingListDto = response.body();
+                    bundle.putSerializable("TABLE_LIST",meetingListDto);
+                    System.out.println("bundndndndnnle ##############" + bundle.getSerializable("TABLE_LIST"));
+                    mFrag.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,mFrag).commit();
+                }
+                @Override
+                public void onFailure(Call<MeetingListDto> call, Throwable t) {
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,mFrag).commit();
+                }
+            });
         }
         if(item.getItemId() == R.id.nav_summary){getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SummaryFragment()).commit();}
         if(item.getItemId() == R.id.nav_home){getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();}

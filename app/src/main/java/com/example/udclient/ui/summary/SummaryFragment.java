@@ -30,6 +30,7 @@ public class SummaryFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
         return root;
     }
 }

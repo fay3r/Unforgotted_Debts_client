@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.udclient.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHolder> {
-    private List<MeetingDto> tableList;
+public class TableUserAdapter extends RecyclerView.Adapter<TableUserAdapter.TableViewHolder> {
+    private List<PersonMeetingDto> personMeetingList;
     private OnItemClickListener listener;
     public interface OnItemClickListener{
         void onItemClick(int position);
@@ -31,8 +30,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
 
         public TableViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            textView =itemView.findViewById(R.id.tableName);
-            textView2= itemView.findViewById(R.id.ownerName);
+            textView =itemView.findViewById(R.id.userNick);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -47,30 +45,29 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
         }
     }
 
-    public TableAdapter(List<MeetingDto> list){
-        tableList= list;
+    public TableUserAdapter(List<PersonMeetingDto> list){
+        personMeetingList= list;
     }
 
 
     @NonNull
     @Override
     public TableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.table_item,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_item,parent,false);
         TableViewHolder tvh = new TableViewHolder(v,listener);
         return tvh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
-        MeetingDto currentTable = tableList.get(position);
+        PersonMeetingDto currentTable = personMeetingList.get(position);
 
-        holder.textView.setText(currentTable.getName());
-        holder.textView2.setText(currentTable.getCode());
+        holder.textView.setText(currentTable.getNick());;
 
     }
 
     @Override
     public int getItemCount() {
-        return tableList.size();
+        return personMeetingList.size();
     }
 }

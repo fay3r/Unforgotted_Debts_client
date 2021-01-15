@@ -4,33 +4,33 @@ import java.io.Serializable;
 
 public class TableItem implements Serializable {
 
-    private String tableName;
-    private String ownerName;
-    private String tableCode;
-    private String tablePassword;
+    private String id_meeting;
+    private String name;
+    private String code;
+    private String password;
     public TableItem(String TableName,String OwnerName){
-        tableName =TableName;
-        ownerName = OwnerName;
+        id_meeting =TableName;
+        name = OwnerName;
     }
 
     public TableItem(String TableName,String OwnerName,String TableCode,String TablePassword){
-        tableName =TableName;
-        ownerName = OwnerName;
-        tableCode = TableCode;
-        tablePassword = TablePassword;
+        id_meeting =TableName;
+        name = OwnerName;
+        code = TableCode;
+        password = TablePassword;
     }
 
-    public String getTableName(){
-        return tableName;
+    public String getId_meeting(){
+        return id_meeting;
     }
 
-    public String getOwnerName(){
-        return ownerName;
+    public String getName(){
+        return name;
     }
 
-    public String getTableCode(){
-        return tableCode;
+    public String getCode(){
+        return code;
     }
 
-    public String getTablePassword() {return tablePassword;}
+    public String getPassword() {return password;}
 }
