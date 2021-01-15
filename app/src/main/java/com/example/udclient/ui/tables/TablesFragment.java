@@ -46,7 +46,8 @@ public class TablesFragment extends Fragment {
     private Button joinTable;
     private EditText exTableCode, exTablePassword;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
+    Intent intent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,7 +95,7 @@ public class TablesFragment extends Fragment {
         return root;
     }
 
-    public void findTable(String code) {
+    public void findTable(final String code) {
         Intent intent = new Intent(getActivity(), TableActivity.class);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -133,7 +134,7 @@ public class TablesFragment extends Fragment {
     }
 
     public void goToTable(String code){
-        Intent intent = new Intent(getActivity(), TableActivity.class);
+        intent = new Intent(getActivity(), TableActivity.class);
         Call<MeetingDetailsDto> call = httpSevice.getMeetingDetails(code);
 
         call.enqueue(new Callback<MeetingDetailsDto>() {

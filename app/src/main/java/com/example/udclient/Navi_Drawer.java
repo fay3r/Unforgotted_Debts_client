@@ -54,7 +54,10 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     private HomeFragment homeFragment;
     private  DrawerLayout drawer;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
+    Intent intent;
+    Bundle bundle;
+    TablesFragment mFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,14 +142,14 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         View mView = inflater.inflate(R.layout.dialog_newtable,null);
         tableName = mView.findViewById(R.id.newTableName);
         tablePassword = mView.findViewById(R.id.newTablePassword);
-        Intent intent = new Intent(this, TableActivity.class);
+        intent = new Intent(this, TableActivity.class);
 
         builder.setView(mView).setTitle("Nowy stół")
                 .setPositiveButton("Stwórz", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        System.out.println(tableName.getText().toString() + " adsada"  +tablePassword.getText().toString());
+                        System.out.println(tableName.getText().toString() + " siema cos nie dziala"  +tablePassword.getText().toString());
                         Call<Void> call = httpSevice.createMeeting(tableName.getText().toString(),tablePassword.getText().toString());
                         call.enqueue(new Callback<Void>() {
                             @Override
@@ -177,8 +180,8 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         if(item.getItemId() == R.id.nav_tables){
-            TablesFragment mFrag = new TablesFragment();
-            Bundle bundle = new Bundle();
+            mFrag = new TablesFragment();
+            bundle = new Bundle();
             Call<MeetingListDto> call = httpSevice.getPersonsMeetingList(idPerson);
             call.enqueue(new Callback<MeetingListDto>() {
                 @Override

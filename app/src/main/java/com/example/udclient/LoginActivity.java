@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email,password;
     private Intent intent;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
 
 
     @Override
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Map<String,String>> call, Throwable t) {
-                System.out.println("asdasdasda" + t.getMessage());
+                System.out.println("siema cos nie dziala" + t.getMessage());
 
             }
         });
