@@ -46,7 +46,8 @@ public class TableUserAdapter extends RecyclerView.Adapter<TableUserAdapter.Tabl
         }
     }
 
-    public TableUserAdapter(List<MeetingDto> list){
+    public TableUserAdapter(List<PersonMeetingDto> list){
+        personMeetingList=list;
     }
 
 
