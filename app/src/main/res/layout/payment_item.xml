@@ -54,22 +54,42 @@
 
         <TextView
             android:id="@+id/paymentDate"
-            android:layout_width="132dp"
-            android:layout_height="match_parent"
+            android:layout_width="131dp"
+            android:layout_height="17dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="272dp"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="-1dp"
-            android:layout_marginBottom="1dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="20dp"
             android:height="20dp"
             android:gravity="center"
             android:text="date"
             android:textAlignment="center"
             android:textColor="@color/main_theme_color"
-            android:textSize="15dp"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/paymentTime"
+            android:layout_width="131dp"
+            android:layout_height="17dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="272dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="3dp"
+            android:height="20dp"
+            android:gravity="center"
+            android:text="time"
+            android:textAlignment="center"
+            android:textColor="@color/main_theme_color"
+            android:textSize="13dp"
             android:textStyle="bold" />
 
     </RelativeLayout>

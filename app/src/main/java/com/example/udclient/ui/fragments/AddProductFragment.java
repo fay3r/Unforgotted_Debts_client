@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.udclient.HttpSevice;
 import com.example.udclient.PaymentActivity;
 import com.example.udclient.R;
+import com.example.udclient.classes.PaymentGetDto;
 import com.example.udclient.classes.PaymentListDto;
 import com.example.udclient.classes.ProductDto;
 import com.example.udclient.classes.ProductListDto;
 import com.example.udclient.classes.TableProductAdapter;
 
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,14 +42,14 @@ public class AddProductFragment extends Fragment {
 
     private ProductListDto productListDto;
     private List<ProductDto> products;
-    private  RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private TableProductAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private int members,id_person,id_meeting;
+    private int members, id_person, id_meeting;
     private String permissions;
 
-    private TextView tPaid, tExpenses,tpartCount,costPerPer;
-    private Button addProduct,addPayment;
+    private TextView tPaid, tExpenses, tpartCount, costPerPer;
+    private Button addProduct, addPayment;
 
     private HttpSevice httpSevice;
     private static String url = "http://192.168.0.104:8080/";
@@ -54,9 +57,9 @@ public class AddProductFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null){
+        if (getArguments() != null) {
             productListDto = (ProductListDto) getArguments().getSerializable("PRODUCT_DATA");
-            members= getArguments().getInt("NUMMEM");
+            members = getArguments().getInt("NUMMEM");
             permissions = getArguments().getString("USER_PERMISSIONS");
             id_person = getArguments().getInt("ID_PERSON");
             id_meeting = getArguments().getInt("ID_MEETING");
@@ -69,7 +72,7 @@ public class AddProductFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_addproduct, container, false);
 
-        products=productListDto.getProductDtoList();
+        products = productListDto.getProductDtoList();
         recyclerView = root.findViewById(R.id.recyclerView3);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
@@ -92,14 +95,14 @@ public class AddProductFragment extends Fragment {
         costPerPer = root.findViewById(R.id.restPerMembers);
         addPayment = root.findViewById(R.id.addPayment);
 
-        double sum=0;
+        double sum = 0;
         for (ProductDto productDto :
                 products) {
-            sum+=productDto.getPrice();
+            sum += productDto.getPrice();
         }
-        tExpenses.setText(sum+"");
-        tpartCount.setText(members+"");
-        costPerPer.setText(Double.toString(sum/members));
+        tExpenses.setText(sum + "");
+        tpartCount.setText(members + "");
+        costPerPer.setText(Double.toString(sum / members));
 
 
         addProduct.setOnClickListener(new View.OnClickListener() {
@@ -116,8 +119,8 @@ public class AddProductFragment extends Fragment {
 
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                System.out.println(" id nervy "+id_person);
-                                 addProductFun(newProdName.getText().toString() ,  newProdPrice.getText().toString());
+                                System.out.println(" id nervy " + id_person);
+                                addProductFun(newProdName.getText().toString(), newProdPrice.getText().toString());
                             }
                         });
                 Dialog dialog = builder.create();
@@ -130,17 +133,22 @@ public class AddProductFragment extends Fragment {
         addPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inetn = new Intent(getContext(), PaymentActivity.class);
+                Intent intent2 = new Intent(getContext(), PaymentActivity.class);
+
                 Call<PaymentListDto> call = httpSevice.getMeetingsPayments(Integer.toString(id_meeting));
+
                 call.enqueue(new Callback<PaymentListDto>() {
                     @Override
                     public void onResponse(Call<PaymentListDto> call, Response<PaymentListDto> response) {
-                        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + response.code());
-                        if(response.code()==200) {
+                        if (response.code() == 200) {
                             PaymentListDto paymentListDto = response.body();
-                            System.out.println("w paymentach" + paymentListDto.getPaymentDtoList().get(0).getValue());
-                            inetn.putExtra("PAYMENT_DATA", paymentListDto);
-                            startActivity(inetn);
+                            System.out.println(response.body().toString());
+                            System.out.println(" zmienna 2@@#@$@#!$%!@# " + Integer.toString(id_meeting) + " Dane " + Integer.toString(id_person));
+                            intent2.putExtra("PAYMENT_DATA", paymentListDto);
+                            intent2.putExtra("ID_MEETING", Integer.toString(id_meeting));
+                            intent2.putExtra("ID_PERSON", Integer.toString(id_person));
+
+                            startActivity(intent2);
                         }
                     }
 
@@ -150,24 +158,24 @@ public class AddProductFragment extends Fragment {
                     }
                 });
 
+
             }
         });
-
 
 
         return root;
     }
 
-    public void addProductFun(String name ,String price){
+    public void addProductFun(String name, String price) {
 
-        Call<Void> call = httpSevice.addProduct(name,price,Integer.toString(id_person),Integer.toString(id_meeting));
+        Call<Void> call = httpSevice.addProduct(name, price, Integer.toString(id_person), Integer.toString(id_meeting));
 
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if( response.code() == 200) {
+                if (response.code() == 200) {
                     Toast.makeText(getContext(), ("Dodano " + name), Toast.LENGTH_LONG).show();
-                } else{
+                } else {
                     Toast.makeText(getContext(), "zyebao", Toast.LENGTH_LONG).show();
 
                 }
@@ -181,8 +189,8 @@ public class AddProductFragment extends Fragment {
 
     }
 
-    public void showProductDetails(ProductDto productDto){
-        TextView proPrice,proNick,proDate,proTime;
+    public void showProductDetails(ProductDto productDto) {
+        TextView proPrice, proNick, proDate, proTime;
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View mView = inflater.inflate(R.layout.dialog_prductdetails, null);
@@ -198,7 +206,7 @@ public class AddProductFragment extends Fragment {
         proTime.setText(productDto.getTime());
 
 
-        if(permissions.equals("owner")) {
+        if (permissions.equals("owner")) {
             builder.setView(mView).setTitle(productDto.getName())
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -207,25 +215,25 @@ public class AddProductFragment extends Fragment {
 
                         }
                     }).setNegativeButton("Usun",
-                        new DialogInterface.OnClickListener(){
+                    new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Call<Void> call = httpSevice.deleteProduct(productDto.getId_product().toString());
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Call<Void> call = httpSevice.deleteProduct(productDto.getId_product().toString());
 
-                                call.enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
-                                        System.out.println("wzialem i usunalem");
-                                    }
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    System.out.println("wzialem i usunalem");
+                                }
 
-                                    @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
-                                        System.out.println(t.getMessage());
-                                    }
-                                });
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    System.out.println(t.getMessage());
+                                }
+                            });
+                        }
+                    });
         } else {
             builder.setView(mView).setTitle("Uzytkownik")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {

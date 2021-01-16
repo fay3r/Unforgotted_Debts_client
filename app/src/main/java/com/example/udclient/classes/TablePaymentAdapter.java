@@ -28,12 +28,14 @@ public class TablePaymentAdapter extends RecyclerView.Adapter<TablePaymentAdapte
         public TextView textView;
         public TextView textView2;
         public TextView textView3;
+        public TextView textView4;
 
         public TableViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             textView =itemView.findViewById(R.id.paymentNick);
             textView2=itemView.findViewById(R.id.paymentVal);
             textView3=itemView.findViewById(R.id.paymentDate);
+            textView4=itemView.findViewById(R.id.paymentTime);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -66,9 +68,10 @@ public class TablePaymentAdapter extends RecyclerView.Adapter<TablePaymentAdapte
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
         PaymentGetDto currentTable = paymentList.get(position);
 
-        holder.textView.setText(currentTable.getId_person().toString());
+        holder.textView.setText(currentTable.getNick().toString());
         holder.textView2.setText(currentTable.getValue().toString());
-        holder.textView3.setText(currentTable.getCalendar().toString());
+        holder.textView3.setText(currentTable.getDate().toString());
+        holder.textView4.setText(currentTable.getTime().toString());
 
     }
 
