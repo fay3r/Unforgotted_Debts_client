@@ -187,6 +187,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                     System.err.println(response.code());
                     MeetingListDto meetingListDto = response.body();
                     System.out.println(meetingListDto.getMeetingDtoList().get(0));
+                    bundle.putString("USER_NICK", nick);
                     bundle.putSerializable("DETAILS",meetingListDto);
                     System.out.println("JESTEŚMY W NAVI_DRAWER" + bundle.getSerializable("DETAILS"));
                     mFrag.setArguments(bundle);
