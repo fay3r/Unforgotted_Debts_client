@@ -3,6 +3,7 @@ package com.example.udclient;
 import com.example.udclient.classes.LoginDto;
 import com.example.udclient.classes.MeetingDetailsDto;
 import com.example.udclient.classes.MeetingListDto;
+import com.example.udclient.classes.ProductListDto;
 import com.example.udclient.classes.RegisterDto;
 
 import java.util.Map;
@@ -33,5 +34,8 @@ public interface HttpSevice {
 
     @GET("ud-server/person_meetings")
     Call<MeetingListDto> getPersonsMeetingList(@Query("id_person") String idPerson);
+
+    @GET("ud-server/products")
+    Call<ProductListDto> getMeetingsProducts(@Query("id_meeting") String id_meeting);
 
 }

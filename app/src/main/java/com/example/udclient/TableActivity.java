@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.udclient.classes.MeetingDetailsDto;
+import com.example.udclient.classes.ProductDto;
+import com.example.udclient.classes.ProductListDto;
 import com.example.udclient.ui.fragments.AddProductFragment;
 import com.example.udclient.ui.fragments.UsersFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -14,9 +16,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import java.util.logging.Logger;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class TableActivity extends AppCompatActivity {
 
     private MeetingDetailsDto meetingDetailsDto;
+    private ProductListDto productListDto;
+    private HttpSevice httpSevice;
+    private static String url = "http://192.168.0.121:8080/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +43,8 @@ public class TableActivity extends AppCompatActivity {
         Intent intent = getIntent();
         meetingDetailsDto = (MeetingDetailsDto) intent.getSerializableExtra("TABLE_DATA");
 
-        System.out.println(meetingDetailsDto.getName() + " ####################################");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        httpSevice = retrofit.create(HttpSevice.class);
 
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -42,12 +56,37 @@ public class TableActivity extends AppCompatActivity {
                     bundle.putSerializable("TABLE_DATA",meetingDetailsDto);
                     selectedFragment = new UsersFragment();
                     selectedFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2,selectedFragment).commit();
 
                 }
                 if (item.getItemId() == R.id.navigation_dashboard) {
-                    selectedFragment = new AddProductFragment();
+
+                    Call<ProductListDto> call = httpSevice.getMeetingsProducts(meetingDetailsDto.getId_meeting().toString());
+
+                    call.enqueue(new Callback<ProductListDto>() {
+                        @Override
+                        public void onResponse(Call<ProductListDto> call, Response<ProductListDto> response) {
+                            if(response.code()==200) {
+                                Fragment frag = new AddProductFragment();
+                                productListDto = response.body();
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("PRODUCT_DATA", productListDto);
+                                frag.setArguments(bundle);
+
+                                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2, frag).commit();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ProductListDto> call, Throwable t) {
+                            System.out.println(t.getMessage());
+
+                        }
+                    });
+
+
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2,selectedFragment).commit();
+
                 return true;
             }
         });

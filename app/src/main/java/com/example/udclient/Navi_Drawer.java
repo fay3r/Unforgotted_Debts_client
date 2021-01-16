@@ -48,9 +48,9 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     private  DrawerLayout drawer;
     private HttpSevice httpSevice;
     private static String url = "http://192.168.0.121:8080/";
-    Intent intent;
-    Bundle bundle;
-    TablesFragment mFrag;
+    private Intent intent;
+    private Bundle bundle;
+    private TablesFragment mFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
