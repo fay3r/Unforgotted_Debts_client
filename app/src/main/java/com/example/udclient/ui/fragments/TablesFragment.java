@@ -40,7 +40,7 @@ public class TablesFragment extends Fragment {
     private Button joinTable;
     private EditText exTableCode, exTablePassword;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
     private Intent intent;
     //private FragmentManager fragmentManager = getActivity().getFragmentManager();
 
@@ -99,7 +99,7 @@ public class TablesFragment extends Fragment {
         View mView = inflater.inflate(R.layout.dialog_tablepassword, null);
         exTablePassword = mView.findViewById(R.id.exTablePassword);
 
-        builder.setView(mView).setTitle("Podaj haslo")
+        builder.setView(mView).setTitle("Password")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                     @Override
@@ -121,7 +121,7 @@ public class TablesFragment extends Fragment {
                         });
                     }
                 })
-                .setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }

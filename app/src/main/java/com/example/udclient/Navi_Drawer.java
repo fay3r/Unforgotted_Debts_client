@@ -47,7 +47,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     private HomeFragment homeFragment;
     private  DrawerLayout drawer;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
     private Intent intent;
     private Bundle bundle;
     private TablesFragment mFrag;
@@ -137,8 +137,8 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         tablePassword = mView.findViewById(R.id.newTablePassword);
         intent = new Intent(this, TableActivity.class);
 
-        builder.setView(mView).setTitle("Nowy stół")
-                .setPositiveButton("Stwórz", new DialogInterface.OnClickListener() {
+        builder.setView(mView).setTitle("New Table")
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {

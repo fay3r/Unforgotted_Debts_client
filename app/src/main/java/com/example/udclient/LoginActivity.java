@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email,password;
     private Intent intent;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
 
 
     @Override

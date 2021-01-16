@@ -29,7 +29,7 @@ public class TableActivity extends AppCompatActivity {
     private MeetingDetailsDto meetingDetailsDto;
     private ProductListDto productListDto;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,7 @@ public class TableActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ProductListDto> call, Response<ProductListDto> response) {
                             if(response.code()==200) {
+                                System.out.println(url);
                                 Fragment frag = new AddProductFragment();
                                 productListDto = response.body();
                                 Bundle bundle = new Bundle();
