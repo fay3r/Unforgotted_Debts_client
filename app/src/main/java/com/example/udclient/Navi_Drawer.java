@@ -30,8 +30,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.Date;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private String nick,email,idPerson;
+    private String nick,email,idPerson, name, surname;
     private TextView drawerNickField, drawerEmailField;
     private EditText tableName, tablePassword;
     private TablesFragment tablesFragment;
@@ -49,7 +47,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     private HomeFragment homeFragment;
     private  DrawerLayout drawer;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
     private Intent intent;
     private Bundle bundle;
     private TablesFragment mFrag;
@@ -79,19 +77,25 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         homeFragment = new HomeFragment();
         tablesFragment = new TablesFragment();
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
-
-        View headerView = navigationView.getHeaderView(0);
-
         Intent intent = getIntent();
         nick=intent.getStringExtra("LOGIN_NAME");
         email=intent.getStringExtra("EMAIL");
         idPerson=intent.getStringExtra("ID_PERSON");
+        name = intent.getStringExtra("NAME");
+        surname = intent.getStringExtra("SURNAME");
+        System.out.println("dane uzytkownika "+  nick + email + idPerson + name + surname);;
 
-        System.out.println("dane uzytkownika "+  nick + email + idPerson);;
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("NAMEHOME", name);
+        bundle1.putString("SURNAMEHOME", surname);
+        HomeFragment fragmentHome = new HomeFragment();
+        fragmentHome.setArguments(bundle1);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragmentHome).commit();
+        navigationView.setCheckedItem(R.id.nav_home);
+
+        View headerView = navigationView.getHeaderView(0);
+
 
         drawerEmailField = headerView.findViewById(R.id.drawerEmail);
         drawerEmailField.setText(nick);
@@ -127,12 +131,12 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         dialog.show();
     }
 
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-//                || super.onSupportNavigateUp();
-//    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
 
     public void createTable(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -178,10 +182,6 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId() == R.id.nav_home){
-            System.out.println("home");
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();}
         if(item.getItemId() == R.id.nav_tables){
             mFrag = new TablesFragment();
             bundle = new Bundle();
@@ -193,9 +193,9 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                     System.err.println(response.code());
                     MeetingListDto meetingListDto = response.body();
                     System.out.println(meetingListDto.getMeetingDtoList().get(0));
-                    bundle.putString("USER_NICK", nick);
                     bundle.putSerializable("DETAILS",meetingListDto);
                     System.out.println("JESTEŚMY W NAVI_DRAWER" + bundle.getSerializable("DETAILS"));
+
                     mFrag.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, mFrag).commit();
                 }
@@ -205,9 +205,15 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                 }
             });
         }
-        if(item.getItemId() == R.id.nav_summary){
-            System.out.println("summary");
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SummaryFragment()).commit();}
+        if(item.getItemId() == R.id.nav_summary){getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SummaryFragment()).commit();}
+        if(item.getItemId() == R.id.nav_home){
+            Bundle bundle1 = new Bundle();
+            bundle1.putString("NAME", name);
+            bundle1.putString("SURNAME", surname);
+            HomeFragment fragmentHome = new HomeFragment();
+            fragmentHome.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,fragmentHome).commit();
+        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

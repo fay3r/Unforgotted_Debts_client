@@ -28,5 +28,6 @@
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="title_users">Users</string>
-    <string name="title_product">Rachunki</string>
+    <string name="title_product">Add</string>
+    <string name="welcome">Create your table and have fun!</string>
 </resources>

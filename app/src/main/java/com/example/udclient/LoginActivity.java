@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email,password;
     private Intent intent;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
 
 
     @Override
@@ -53,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("LOGIN_NAME", response.body().get("nick"));
                     intent.putExtra("EMAIL", email.getText().toString());
                     intent.putExtra("ID_PERSON",response.body().get("user_id"));
+                    intent.putExtra("NAME", response.body().get("name"));
+                    intent.putExtra("SURNAME", response.body().get("surname"));
                     saveData(email.getText().toString());
                     startActivity(intent);
                 }
