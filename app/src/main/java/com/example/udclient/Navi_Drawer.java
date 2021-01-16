@@ -30,6 +30,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +49,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     private HomeFragment homeFragment;
     private  DrawerLayout drawer;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
     private Intent intent;
     private Bundle bundle;
     private TablesFragment mFrag;
@@ -86,6 +88,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         nick=intent.getStringExtra("LOGIN_NAME");
         email=intent.getStringExtra("EMAIL");
         idPerson=intent.getStringExtra("ID_PERSON");
+
         System.out.println("dane uzytkownika "+  nick + email + idPerson);;
 
         drawerEmailField = headerView.findViewById(R.id.drawerEmail);
@@ -195,8 +198,12 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                 }
             });
         }
-        if(item.getItemId() == R.id.nav_summary){getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SummaryFragment()).commit();}
-        if(item.getItemId() == R.id.nav_home){getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();}
+        if(item.getItemId() == R.id.nav_summary){
+            System.out.println("summary");
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SummaryFragment()).commit();}
+        if(item.getItemId() == R.id.nav_home){
+            System.out.println("home");
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();}
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -8,16 +8,58 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
-        android:layout_width="421dp"
-        android:layout_height="270dp"
-        android:layout_below="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="187dp"
         android:background="#FFF"
         android:backgroundTint="#FFF"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.147" />
+        app:layout_constraintVertical_bias="0.133" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
+        android:text="Dodaj do stolu!"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+
+    <EditText
+        android:id="@+id/userToAdd"
+        android:layout_width="183dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <Button
+        android:id="@+id/userAddButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="56dp"
+        android:text="Button"
+        app:layout_constraintStart_toEndOf="@+id/userToAdd"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:text="Nick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

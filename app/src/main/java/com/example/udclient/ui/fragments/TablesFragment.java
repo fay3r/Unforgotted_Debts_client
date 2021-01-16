@@ -40,7 +40,7 @@ public class TablesFragment extends Fragment {
     private Button joinTable;
     private EditText exTableCode, exTablePassword;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
     private Intent intent;
     //private FragmentManager fragmentManager = getActivity().getFragmentManager();
 

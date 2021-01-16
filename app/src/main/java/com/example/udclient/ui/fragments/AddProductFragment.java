@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,17 +24,22 @@ import java.util.List;
 
 public class AddProductFragment extends Fragment {
 
-    ProductListDto productListDto;
-    List<ProductDto> products;
-    RecyclerView recyclerView;
-    TableProductAdapter adapter;
-    RecyclerView.LayoutManager layoutManager;
+    private ProductListDto productListDto;
+    private List<ProductDto> products;
+    private  RecyclerView recyclerView;
+    private TableProductAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private int members;
+
+    private TextView tPaid, tExpenses,tpartCount;
+    private Button addP;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
             productListDto = (ProductListDto) getArguments().getSerializable("PRODUCT_DATA");
+            members= getArguments().getInt("NUMMEM");
         }
     }
 
@@ -57,6 +64,21 @@ public class AddProductFragment extends Fragment {
 
             }
         });
+
+        tExpenses = root.findViewById(R.id.totalExpenses);
+        tPaid = root.findViewById(R.id.paid);
+        tpartCount = root.findViewById(R.id.partCount);
+        addP = root.findViewById(R.id.addProduct);
+
+        double sum=0;
+        for (ProductDto productDto :
+                products) {
+            sum+=productDto.getPrice();
+        }
+        tExpenses.setText(sum+"");
+        tpartCount.setText(members+"");
+        
+
 
         return root;
     }

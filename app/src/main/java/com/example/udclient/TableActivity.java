@@ -29,7 +29,7 @@ public class TableActivity extends AppCompatActivity {
     private MeetingDetailsDto meetingDetailsDto;
     private ProductListDto productListDto;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class TableActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_table);
         BottomNavigationView navView = findViewById(R.id.nav_view2);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
@@ -72,6 +72,7 @@ public class TableActivity extends AppCompatActivity {
                                 productListDto = response.body();
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("PRODUCT_DATA", productListDto);
+                                bundle.putInt("NUMMEM",meetingDetailsDto.getPersonMeetingList().size());
                                 frag.setArguments(bundle);
 
                                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2, frag).commit();
