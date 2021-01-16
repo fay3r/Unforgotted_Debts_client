@@ -3,10 +3,13 @@ package com.example.udclient;
 import com.example.udclient.classes.LoginDto;
 import com.example.udclient.classes.MeetingDetailsDto;
 import com.example.udclient.classes.MeetingListDto;
+import com.example.udclient.classes.PaymentDto;
+import com.example.udclient.classes.PaymentGetDto;
 import com.example.udclient.classes.PaymentListDto;
 import com.example.udclient.classes.ProductListDto;
 import com.example.udclient.classes.RegisterDto;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -50,5 +53,8 @@ public interface HttpSevice {
 
     @GET("ud-server/payments_meeting/{id_meeting}")
     Call<PaymentListDto> getMeetingsPayments(@Path("id_meeting") String id_meeting);
+
+    @POST("ud-server/payment")
+    Call<Void> insertPayment(@Body PaymentDto paymentDto);
 
 }
