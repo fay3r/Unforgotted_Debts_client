@@ -57,4 +57,7 @@ public interface HttpSevice {
     @POST("ud-server/payment")
     Call<Void> insertPayment(@Body PaymentDto paymentDto);
 
+    @GET("ud-server/payments_sum_meeting/{id_meeting}")
+    Call<Double> getMeetingsPayment(@Path("id_meeting") String id_meeting);
+
 }

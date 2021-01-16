@@ -50,9 +50,10 @@ public class AddProductFragment extends Fragment {
 
     private TextView tPaid, tExpenses, tpartCount, costPerPer;
     private Button addProduct, addPayment;
+    private Double sum;
 
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,14 +96,14 @@ public class AddProductFragment extends Fragment {
         costPerPer = root.findViewById(R.id.restPerMembers);
         addPayment = root.findViewById(R.id.addPayment);
 
-        double sum = 0;
+        sum = 0.0;
         for (ProductDto productDto :
                 products) {
             sum += productDto.getPrice();
         }
         tExpenses.setText(sum + "");
         tpartCount.setText(members + "");
-        costPerPer.setText(Double.toString(sum / members));
+
 
 
         addProduct.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +130,21 @@ public class AddProductFragment extends Fragment {
         });
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         httpSevice = retrofit.create(HttpSevice.class);
+
+        Call<Double> call = httpSevice.getMeetingsPayment(Integer.toString(id_meeting));
+        call.enqueue(new Callback<Double>() {
+            @Override
+            public void onResponse(Call<Double> call, Response<Double> response) {
+                Double val = response.body();
+                tPaid.setText(Double.toString(val));
+                costPerPer.setText(Double.toString(Math.round(((sum-val )/ members)* 100.0) / 100.0));
+            }
+
+            @Override
+            public void onFailure(Call<Double> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
 
         addPayment.setOnClickListener(new View.OnClickListener() {
             @Override
