@@ -170,7 +170,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                         });
                     }
                 })
-                .setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }

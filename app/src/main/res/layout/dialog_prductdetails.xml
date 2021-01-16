@@ -13,6 +13,8 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:text="Nick:"
+        android:textColor="#000"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/surLabel" />
 
@@ -20,9 +22,11 @@
         android:id="@+id/surLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
-        android:text="Cena:"
+        android:text="Value:"
+        android:textColor="#000"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +34,7 @@
         android:id="@+id/prodNick"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/nickLabel"
@@ -52,7 +56,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
-        android:text="Data"
+        android:text="Date:"
+        android:textColor="#000"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nickLabel" />
 
@@ -60,7 +66,7 @@
         android:id="@+id/prodDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/dateLab"

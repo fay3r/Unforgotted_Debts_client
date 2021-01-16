@@ -235,7 +235,7 @@ public class AddProductFragment extends Fragment {
                         }
                     });
         } else {
-            builder.setView(mView).setTitle("Uzytkownik")
+            builder.setView(mView).setTitle("User")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                         @Override
