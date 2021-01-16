@@ -1,4 +1,4 @@
-package com.example.udclient.ui.tables;
+package com.example.udclient.ui.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -140,16 +140,8 @@ public class TablesFragment extends Fragment {
             @Override
             public void onResponse(Call<MeetingDetailsDto> call, Response<MeetingDetailsDto> response) {
                 MeetingDetailsDto meetingDetailsDto = response.body();
-                //Fragment usersFragment = new Fragment();
-               // FragmentManager fm = getFragmentManager();
-                //Bundle bundle = new Bundle();
-                //bundle.putSerializable("TABLE_DATA", meetingDetailsDto);
-               // usersFragment.setArguments(bundle);
-               // fm.beginTransaction().replace(R.id.nav_host_fragment, usersFragment).addToBackStack(null).commit();
-                System.err.println(response.code());
-                System.err.println(response.body());
                 intent.putExtra("TABLE_DATA",meetingDetailsDto);
-                //intent.putExtra("DETAILS", list);
+
                 startActivity(intent);
             }
 

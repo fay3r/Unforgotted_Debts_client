@@ -12,9 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.udclient.classes.MeetingListDto;
-import com.example.udclient.ui.home.HomeFragment;
-import com.example.udclient.ui.summary.SummaryFragment;
-import com.example.udclient.ui.tables.TablesFragment;
+import com.example.udclient.ui.fragments.HomeFragment;
+import com.example.udclient.ui.fragments.SummaryFragment;
+import com.example.udclient.ui.fragments.TablesFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 

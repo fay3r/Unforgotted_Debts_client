@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.udclient.ui.home.HomeFragment"
+        android:name="com.example.udclient.ui.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_tables"
-        android:name="com.example.udclient.ui.tables.TablesFragment"
+        android:name="com.example.udclient.ui.fragments.TablesFragment"
         android:label="@string/menu_tables"
         tools:layout="@layout/fragment_tables" />
 
     <fragment
         android:id="@+id/nav_summary"
-        android:name="com.example.udclient.ui.summary.SummaryFragment"
+        android:name="com.example.udclient.ui.fragments.SummaryFragment"
         android:label="@string/menu_summary"
         tools:layout="@layout/fragment_summary" />
 </navigation>
