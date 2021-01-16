@@ -79,8 +79,10 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         homeFragment = new HomeFragment();
         tablesFragment = new TablesFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();
-        navigationView.setCheckedItem(R.id.nav_home);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_home);
+        }
 
         View headerView = navigationView.getHeaderView(0);
 
@@ -125,12 +127,12 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         dialog.show();
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+//                || super.onSupportNavigateUp();
+//    }
 
     public void createTable(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -176,6 +178,10 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        if(item.getItemId() == R.id.nav_home){
+            System.out.println("home");
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();}
         if(item.getItemId() == R.id.nav_tables){
             mFrag = new TablesFragment();
             bundle = new Bundle();
@@ -202,9 +208,6 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         if(item.getItemId() == R.id.nav_summary){
             System.out.println("summary");
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SummaryFragment()).commit();}
-        if(item.getItemId() == R.id.nav_home){
-            System.out.println("home");
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();}
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

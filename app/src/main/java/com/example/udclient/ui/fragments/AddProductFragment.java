@@ -104,6 +104,7 @@ public class AddProductFragment extends Fragment {
         return root;
     }
 
+
     public void showProductDetails(ProductDto productDto){
         TextView proPrice,proNick,proDate,proTime;
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
