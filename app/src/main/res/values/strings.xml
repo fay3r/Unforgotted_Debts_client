@@ -31,6 +31,8 @@
     <string name="title_product">Bills</string>
     <string name="welcome">Create your table and have fun!</string>
     <string name="title_activity_payments">ScrollingActivity</string>
+    <string name="addNew">Add</string>
+    <string name="addNewMember">Add new member to your table</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

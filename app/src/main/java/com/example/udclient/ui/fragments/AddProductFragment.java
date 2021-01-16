@@ -52,7 +52,7 @@ public class AddProductFragment extends Fragment {
     private Button addProduct, addPayment;
 
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
