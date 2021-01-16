@@ -39,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private String nick,email,idPerson;
+    private String nick,email,idPerson, name, surname;
     private TextView drawerNickField, drawerEmailField;
     private EditText tableName, tablePassword;
     private TablesFragment tablesFragment;
@@ -77,16 +77,25 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         homeFragment = new HomeFragment();
         tablesFragment = new TablesFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();
-        navigationView.setCheckedItem(R.id.nav_home);
-
-        View headerView = navigationView.getHeaderView(0);
-
         Intent intent = getIntent();
         nick=intent.getStringExtra("LOGIN_NAME");
         email=intent.getStringExtra("EMAIL");
         idPerson=intent.getStringExtra("ID_PERSON");
-        System.out.println("dane uzytkownika "+  nick + email + idPerson);;
+        name = intent.getStringExtra("NAME");
+        surname = intent.getStringExtra("SURNAME");
+        System.out.println("dane uzytkownika "+  nick + email + idPerson + name + surname);;
+
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("NAMEHOME", name);
+        bundle1.putString("SURNAMEHOME", surname);
+        HomeFragment fragmentHome = new HomeFragment();
+        fragmentHome.setArguments(bundle1);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragmentHome).commit();
+        navigationView.setCheckedItem(R.id.nav_home);
+
+        View headerView = navigationView.getHeaderView(0);
+
 
         drawerEmailField = headerView.findViewById(R.id.drawerEmail);
         drawerEmailField.setText(nick);
@@ -186,6 +195,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                     System.out.println(meetingListDto.getMeetingDtoList().get(0));
                     bundle.putSerializable("DETAILS",meetingListDto);
                     System.out.println("JESTEŚMY W NAVI_DRAWER" + bundle.getSerializable("DETAILS"));
+
                     mFrag.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, mFrag).commit();
                 }
@@ -196,7 +206,14 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
             });
         }
         if(item.getItemId() == R.id.nav_summary){getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SummaryFragment()).commit();}
-        if(item.getItemId() == R.id.nav_home){getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new HomeFragment()).commit();}
+        if(item.getItemId() == R.id.nav_home){
+            Bundle bundle1 = new Bundle();
+            bundle1.putString("NAME", name);
+            bundle1.putString("SURNAME", surname);
+            HomeFragment fragmentHome = new HomeFragment();
+            fragmentHome.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,fragmentHome).commit();
+        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

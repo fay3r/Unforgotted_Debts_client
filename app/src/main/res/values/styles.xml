@@ -14,6 +14,10 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="HomeFragment" parent="AppTheme.NoActionBar">
+
+    </style>
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="SplashScreen" parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
