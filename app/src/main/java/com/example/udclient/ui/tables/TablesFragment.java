@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.udclient.HttpSevice;
 import com.example.udclient.R;
 import com.example.udclient.TableActivity;
-import com.example.udclient.UsersActivity;
 import com.example.udclient.classes.MeetingDetailsDto;
 import com.example.udclient.classes.MeetingListDto;
 import com.example.udclient.classes.TableAdapter;
@@ -133,7 +132,7 @@ public class TablesFragment extends Fragment {
     }
 
     public void goToTable(String code){
-        intent = new Intent(getActivity(), UsersActivity.class);
+        intent = new Intent(getContext(), TableActivity.class);
 
         Call<MeetingDetailsDto> call = httpSevice.getMeetingDetails(code);
 

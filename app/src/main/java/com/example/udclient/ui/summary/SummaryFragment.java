@@ -16,20 +16,12 @@ import com.example.udclient.R;
 
 public class SummaryFragment extends Fragment {
 
-    private SummaryViewModel summaryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        summaryViewModel =
-                ViewModelProviders.of(this).get(SummaryViewModel.class);
+;
         View root = inflater.inflate(R.layout.fragment_summary, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        summaryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
 
         return root;
     }
