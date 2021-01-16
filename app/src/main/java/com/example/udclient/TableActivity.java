@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.udclient.classes.MeetingDetailsDto;
+import com.example.udclient.classes.PersonMeetingDto;
 import com.example.udclient.classes.ProductDto;
 import com.example.udclient.classes.ProductListDto;
 import com.example.udclient.ui.fragments.AddProductFragment;
@@ -29,7 +30,8 @@ public class TableActivity extends AppCompatActivity {
     private MeetingDetailsDto meetingDetailsDto;
     private ProductListDto productListDto;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
+    private String nick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +39,12 @@ public class TableActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_table);
         BottomNavigationView navView = findViewById(R.id.nav_view2);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         meetingDetailsDto = (MeetingDetailsDto) intent.getSerializableExtra("TABLE_DATA");
+        nick = intent.getStringExtra("USER_NICK");
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         httpSevice = retrofit.create(HttpSevice.class);
@@ -72,6 +75,16 @@ public class TableActivity extends AppCompatActivity {
                                 productListDto = response.body();
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("PRODUCT_DATA", productListDto);
+                                bundle.putInt("NUMMEM",meetingDetailsDto.getPersonMeetingList().size());
+
+                                for(PersonMeetingDto personMeetingDto : meetingDetailsDto.getPersonMeetingList()){
+                                    System.out.println(personMeetingDto.getName() + " rowna sie " + nick);
+                                    if(personMeetingDto.getNick().equals(nick)){
+                                        nick = personMeetingDto.getUser_type();
+                                    }
+                                }
+                                System.out.println("uprawnienia  " + nick );
+                                bundle.putString("USER_PERMISSIONS", nick);
                                 frag.setArguments(bundle);
 
                                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2, frag).commit();

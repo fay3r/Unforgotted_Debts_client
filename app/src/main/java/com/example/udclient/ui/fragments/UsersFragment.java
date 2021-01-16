@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,10 +18,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.udclient.HttpSevice;
 import com.example.udclient.R;
 import com.example.udclient.classes.MeetingDetailsDto;
 import com.example.udclient.classes.PersonMeetingDto;
-import com.example.udclient.classes.TableAdapter;
 import com.example.udclient.classes.TableUserAdapter;
 
 import java.util.List;
@@ -26,6 +29,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UsersFragment extends Fragment {
 
@@ -34,6 +39,11 @@ public class UsersFragment extends Fragment {
     private TableUserAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<PersonMeetingDto> users;
+    private EditText addPerNick;
+    private Button addPerson;
+
+    private HttpSevice httpSevice;
+    private static String url = "http://192.168.0.121:8080/";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +74,36 @@ public class UsersFragment extends Fragment {
             }
         });
 
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        httpSevice = retrofit.create(HttpSevice.class);
+
+        addPerNick = root.findViewById(R.id.userToAdd);
+        addPerson = root.findViewById(R.id.userAddButton);
+
+        addPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<Void> call = httpSevice.addPerson(meetingDetailsDto.getId_meeting().toString(),addPerNick.getText().toString()) ;
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.code()==200){
+                            Toast.makeText(getContext(), ("Dodano " + addPerNick.getText().toString()), Toast.LENGTH_LONG).show();
+                        }
+                        if(response.code()==400){
+                            Toast.makeText(getContext(), (addPerNick.getText().toString() + " nie istnieje"), Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println(t.getMessage());
+                    }
+                });
+            }
+        });
+
         return root;
     }
 
@@ -72,10 +112,10 @@ public class UsersFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View mView = inflater.inflate(R.layout.dialog_userdetails, null);
-        nick = mView.findViewById(R.id.userNickDet);
-        name = mView.findViewById(R.id.userNameDet);
-        surname = mView.findViewById(R.id.userSurDet);
-        email = mView.findViewById(R.id.userMailDet);
+        nick = mView.findViewById(R.id.prodNick);
+        name = mView.findViewById(R.id.prodName);
+        surname = mView.findViewById(R.id.prodPrice);
+        email = mView.findViewById(R.id.prodDate);
 
         nick.setText(personMeetingDto.getNick());
         name.setText(personMeetingDto.getName());

@@ -38,4 +38,10 @@ public interface HttpSevice {
     @GET("ud-server/products")
     Call<ProductListDto> getMeetingsProducts(@Query("id_meeting") String id_meeting);
 
+    @POST("ud-server/delete_product")
+    Call<Void> deleteProduct(@Query("id_product") String id_product);
+
+    @POST("ud-server/add_person")
+    Call<Void> addPerson(@Query("id_meeting") String id_meeting,@Query("nick") String nick);
+
 }

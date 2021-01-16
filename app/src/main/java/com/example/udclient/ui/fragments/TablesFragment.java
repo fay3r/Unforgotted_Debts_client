@@ -40,8 +40,9 @@ public class TablesFragment extends Fragment {
     private Button joinTable;
     private EditText exTableCode, exTablePassword;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
     private Intent intent;
+    private String nick;
     //private FragmentManager fragmentManager = getActivity().getFragmentManager();
 
     @Override
@@ -49,6 +50,7 @@ public class TablesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             list = (MeetingListDto) getArguments().getSerializable("DETAILS");
+            nick = getArguments().getString("USER_NICK");
         }
     }
 
@@ -141,6 +143,7 @@ public class TablesFragment extends Fragment {
             public void onResponse(Call<MeetingDetailsDto> call, Response<MeetingDetailsDto> response) {
                 MeetingDetailsDto meetingDetailsDto = response.body();
                 intent.putExtra("TABLE_DATA",meetingDetailsDto);
+                intent.putExtra("USER_NICK",nick);
 
                 startActivity(intent);
             }
