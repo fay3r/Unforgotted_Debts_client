@@ -10,8 +10,6 @@ public class MeetingDetailsDto implements Serializable {
     private String password;
     private List<PersonMeetingDto> personMeetingList;
 
-    public MeetingDetailsDto() {
-    }
 
     public MeetingDetailsDto(Integer id_meeting, String name, String code, String password, List<PersonMeetingDto> personMeetingList) {
         this.id_meeting = id_meeting;

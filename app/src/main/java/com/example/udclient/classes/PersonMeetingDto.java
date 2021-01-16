@@ -10,8 +10,6 @@ public class PersonMeetingDto implements Serializable {
     private String email;
     private String user_type;
 
-    public PersonMeetingDto() {
-    }
 
     public PersonMeetingDto(Integer id_person, String nick, String name, String surname, String email, String user_type) {
         this.id_person = id_person;

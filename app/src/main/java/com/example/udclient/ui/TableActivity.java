@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.udclient.R;
 import com.example.udclient.classes.MeetingDetailsDto;
+import com.example.udclient.classes.MeetingListDto;
 import com.example.udclient.classes.PersonMeetingDto;
 import com.example.udclient.ui.tables.TablesFragment;
 import com.example.udclient.ui.ui.main.AddFragment;
@@ -28,6 +29,7 @@ import java.util.List;
 
 public class TableActivity extends AppCompatActivity {
 
+    MeetingListDto meetingListDto;
     MeetingDetailsDto meetingDetailsDto;
     TextView title ;
     @Override
@@ -42,12 +44,13 @@ public class TableActivity extends AppCompatActivity {
         title = findViewById(R.id.tabTitle);
         Intent intent = getIntent();
         meetingDetailsDto = (MeetingDetailsDto) intent.getSerializableExtra("TABLE_DATA");
+        meetingListDto = (MeetingListDto) intent.getSerializableExtra("DETAILS");
         title.setText(meetingDetailsDto.getName());
 
         TablesFragment mFrag = new TablesFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("TABLE_LIST",meetingDetailsDto);
-        System.out.println("bundndndndnnle ##############" + bundle.getSerializable("TABLE_LIST"));
+        bundle.putSerializable("DETAILS",meetingListDto);
+        System.out.println("JESTESMY W TABLEACTIVITY " + bundle.getSerializable("DETAILS"));
         mFrag.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.view_pager,mFrag).commit();
 

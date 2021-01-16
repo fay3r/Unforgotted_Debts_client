@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.udclient.classes.LoginDto;
 
@@ -44,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
     public void logInApp(View view) {
         intent = new Intent(this,Navi_Drawer.class);
         Call<Map<String,String>> call = httpSevice.login(new LoginDto(email.getText().toString(),password.getText().toString()));
-        //System.out.println("dziala2");
         call.enqueue(new Callback<Map<String,String>>() {
             @Override
             public void onResponse(Call<Map<String,String>> call, Response<Map<String,String>> response) {
@@ -55,6 +55,12 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("ID_PERSON",response.body().get("user_id"));
                     saveData(email.getText().toString());
                     startActivity(intent);
+                }
+                else if(password.getText().toString().matches("")){
+                    showToast("Empty password field");
+                }
+                else{
+                    showToast("Bad login or password");
                 }
             }
 
@@ -93,6 +99,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showToast(String text){
-            //TODO trzeba dodac wyswietlanie toasta ze nie moze byc nic puste najlepij
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 }

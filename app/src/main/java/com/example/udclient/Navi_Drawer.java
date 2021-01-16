@@ -96,7 +96,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
         System.out.println("dane uzytkownika "+  nick + email + idPerson);;
 
         drawerEmailField = headerView.findViewById(R.id.drawerEmail);
-        drawerEmailField.setText(email);
+        drawerEmailField.setText(nick);
 
        // drawerNickField = headerView.findViewById(R.id.drawerNick);
         //drawerNickField.setText("Unforgotten debts");
@@ -186,11 +186,14 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
             call.enqueue(new Callback<MeetingListDto>() {
                 @Override
                 public void onResponse(Call<MeetingListDto> call, Response<MeetingListDto> response) {
+                    System.err.println(response.body());
+                    System.err.println(response.code());
                     MeetingListDto meetingListDto = response.body();
-                    bundle.putSerializable("TABLE_LIST",meetingListDto);
-                    System.out.println("bundndndndnnle ##############" + bundle.getSerializable("TABLE_LIST"));
+                    System.out.println(meetingListDto.getMeetingDtoList().get(0));
+                    bundle.putSerializable("DETAILS",meetingListDto);
+                    System.out.println("JESTEŚMY W NAVI_DRAWER" + bundle.getSerializable("DETAILS"));
                     mFrag.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,mFrag).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, mFrag).commit();
                 }
                 @Override
                 public void onFailure(Call<MeetingListDto> call, Throwable t) {

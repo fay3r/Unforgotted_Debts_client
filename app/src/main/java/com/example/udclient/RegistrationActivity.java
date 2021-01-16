@@ -41,21 +41,11 @@ public class RegistrationActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         httpSevice = retrofit.create(HttpSevice.class);
 
-      /*  signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signUp(v);
-                Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
-                startActivity(i);
-            }
-        });*/
-
-
     }
 
 
     public boolean checkFields(){
-        if(nick == null || surName == null || firstName == null || password == null || email == null){
+        if(nick.getText().toString().matches("")|| surName.getText().toString().matches("") || firstName.getText().toString().matches("") || password.getText().toString().matches("") || email.getText().toString().matches("")){
             return false;
         }
         return true;
@@ -63,41 +53,47 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     public void signUp(View view) {
-        if (!email.getText().toString().replace(" ", "").isEmpty()) {
-            if (!password.getText().toString().replace(" ", "").isEmpty()) {
-                if (!nick.getText().toString().replace(" ", "").isEmpty()) {
-                    if (!firstName.getText().toString().replace(" ", "").isEmpty()) {
-                        if (!surName.getText().toString().replace(" ", "").isEmpty()) {
+        if(checkFields()){
+            if (!email.getText().toString().replace(" ", "").isEmpty()) {
+                if (!password.getText().toString().replace(" ", "").isEmpty()) {
+                    if (!nick.getText().toString().replace(" ", "").isEmpty()) {
+                        if (!firstName.getText().toString().replace(" ", "").isEmpty()) {
+                            if (!surName.getText().toString().replace(" ", "").isEmpty()) {
 
-                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                            Call<String> call = httpSevice.register(new RegisterDto(nick.getText().toString(), firstName.getText().toString(), surName.getText().toString(), email.getText().toString(), password.getText().toString()));
-                            call.enqueue(new Callback<String>() {
-                                @Override
-                                public void onResponse(Call<String> call, Response<String> response) {
-                                    if(checkFields()){
-                                        if (response.code() == 200) {
-                                            showToast("Registered!");
-                                            startActivity(intent);
-                                        }
+                                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                Call<Void> call = httpSevice.register(new RegisterDto(nick.getText().toString(), firstName.getText().toString(), surName.getText().toString(), email.getText().toString(), password.getText().toString()));
+                                call.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        System.err.println(response.code());
+                                        System.err.println(response.body());
+                                            if (response.code() == 200) {
+                                                showToast("Registered!");
+                                                startActivity(intent);
+                                            } else if (response.code() == 400){
+                                                showToast("Email already taken!");
+                                            }
                                     }
-                                    if (response.code() == 400) {
-                                        showToast("Email already taken!");
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        System.err.println(t.getMessage());
                                     }
-                                }
+                                });
+                                saveData(email.getText().toString());
 
-                                @Override
-                                public void onFailure(Call<String> call, Throwable t) {
-                                    System.err.println(t.getMessage());
-                                }
-                            });
-                            saveData(email.getText().toString());
-
+                            }
                         }
                     }
                 }
             }
         }
+        else {
+            showToast("Some fields might be empty");
+        }
     }
+
+
 
 
     private void saveData(String spEmail) {
@@ -108,7 +104,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void showToast(String text) {
-        //TODO trzeba dodac wyswietlanie toasta ze nie moze byc nic puste najlepij
-            Toast.makeText(this, text, Toast.LENGTH_SHORT);
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 }

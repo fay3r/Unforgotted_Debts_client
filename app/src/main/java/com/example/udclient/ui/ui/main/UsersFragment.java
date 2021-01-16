@@ -32,6 +32,7 @@ public class UsersFragment extends Fragment {
     private TableUserAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private MeetingDetailsDto meetingDetailsDto;
+    private MeetingListDto meetingListDto = new MeetingListDto();
 
     public static UsersFragment newInstance(int index) {
         UsersFragment fragment = new UsersFragment();
@@ -44,34 +45,40 @@ public class UsersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int index = 1;
+       // int index = 1;
         if (getArguments() != null) {
-            index = getArguments().getInt(ARG_SECTION_NUMBER);
+            //index = getArguments().getInt(ARG_SECTION_NUMBER);
+            //meetingDetailsDto = (MeetingDetailsDto) getArguments().getSerializable("TABLE_DATA");
+            meetingDetailsDto = (MeetingDetailsDto) getArguments().getSerializable("DETAILS");
+            //System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"+meetingDetailsDto.getPersonMeetingList().get(0));
         }
+
     }
 
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_users, container, false);
+        adapter = new TableUserAdapter(meetingListDto.getMeetingDtoList());
 
-
-
-        recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
-        adapter = new TableUserAdapter(meetingDetailsDto.getPersonMeetingList());
+
+        //System.out.println(meetingListDto.getMeetingDtoList().get(0).getName());
+       // System.out.println("__________________" + adapter.getItemCount() + adapter.getItemId(0) + adapter.getItemViewType(0));
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemListener(new TableUserAdapter.OnItemClickListener() {
+        /*adapter.setOnItemListener(new TableUserAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
             }
-        });
+        });*/
 
         return root;
     }

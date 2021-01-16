@@ -1,6 +1,7 @@
 package com.example.udclient.ui.tables;
 
 import android.app.Dialog;
+import androidx.fragment.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,12 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.udclient.HttpSevice;
 import com.example.udclient.Navi_Drawer;
 import com.example.udclient.R;
+import com.example.udclient.UsersActivity;
 import com.example.udclient.classes.MeetingDetailsDto;
 import com.example.udclient.classes.MeetingListDto;
 import com.example.udclient.classes.RegisterDto;
 import com.example.udclient.classes.TableAdapter;
 import com.example.udclient.classes.TableItem;
 import com.example.udclient.ui.TableActivity;
+import com.example.udclient.ui.ui.main.UsersFragment;
 
 import java.util.ArrayList;
 
@@ -47,13 +50,14 @@ public class TablesFragment extends Fragment {
     private EditText exTableCode, exTablePassword;
     private HttpSevice httpSevice;
     private static String url = "http://192.168.0.104:8080/";
-    Intent intent;
+    private Intent intent;
+    //private FragmentManager fragmentManager = getActivity().getFragmentManager();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            list = (MeetingListDto) getArguments().getSerializable("TABLE_LIST");
+            list = (MeetingListDto) getArguments().getSerializable("DETAILS");
         }
     }
 
@@ -74,7 +78,9 @@ public class TablesFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 String code = list.getMeetingDtoList().get(position).getCode();
+                System.out.println("#########################################"+code);
                 goToTable(code);
+
             }
         });
         joinTable = root.findViewById(R.id.joinExistingTable);
@@ -112,6 +118,7 @@ public class TablesFragment extends Fragment {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if(response.code()==200){
+                                    System.out.println("@@@@@@@@@@@@@małpa");
                                     goToTable(code);
                                 }
                             }
@@ -134,14 +141,24 @@ public class TablesFragment extends Fragment {
     }
 
     public void goToTable(String code){
-        intent = new Intent(getActivity(), TableActivity.class);
+        intent = new Intent(getActivity(), UsersActivity.class);
+
         Call<MeetingDetailsDto> call = httpSevice.getMeetingDetails(code);
 
         call.enqueue(new Callback<MeetingDetailsDto>() {
             @Override
             public void onResponse(Call<MeetingDetailsDto> call, Response<MeetingDetailsDto> response) {
                 MeetingDetailsDto meetingDetailsDto = response.body();
+                //Fragment usersFragment = new Fragment();
+               // FragmentManager fm = getFragmentManager();
+                //Bundle bundle = new Bundle();
+                //bundle.putSerializable("TABLE_DATA", meetingDetailsDto);
+               // usersFragment.setArguments(bundle);
+               // fm.beginTransaction().replace(R.id.nav_host_fragment, usersFragment).addToBackStack(null).commit();
+                System.err.println(response.code());
+                System.err.println(response.body());
                 intent.putExtra("TABLE_DATA",meetingDetailsDto);
+                //intent.putExtra("DETAILS", list);
                 startActivity(intent);
             }
 

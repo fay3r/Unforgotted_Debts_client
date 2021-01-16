@@ -20,7 +20,7 @@ public interface HttpSevice {
     Call<Map<String,String>> login(@Body LoginDto loginDto);
 
     @POST("ud-server/register")
-    Call<String> register(@Body RegisterDto registerDto);
+    Call<Void> register(@Body RegisterDto registerDto);
 
     @POST("ud-server/create_meeting")
     Call<Void> createMeeting(@Query("name") String name , @Query("password") String password);
@@ -28,8 +28,8 @@ public interface HttpSevice {
     @POST("ud-server/join_meeting")
     Call<Void> joinMeeting(@Query("name") String name , @Query("password") String password);
 
-    @GET("ud-server/meeting_details_code/{code}")
-    Call<MeetingDetailsDto> getMeetingDetails(@Path("code")String code);
+    @GET("ud-server/meeting_details_code")
+    Call<MeetingDetailsDto> getMeetingDetails(@Query("code") String code);
 
     @GET("ud-server/person_meetings")
     Call<MeetingListDto> getPersonsMeetingList(@Query("id_person") String idPerson);

@@ -35,6 +35,7 @@ public class TableUserAdapter extends RecyclerView.Adapter<TableUserAdapter.Tabl
                 @Override
                 public void onClick(View view) {
                     if(listener!=null){
+
                         int position = getAdapterPosition();
                         if(position!=RecyclerView.NO_POSITION){
                             listener.onItemClick(position);
@@ -45,8 +46,7 @@ public class TableUserAdapter extends RecyclerView.Adapter<TableUserAdapter.Tabl
         }
     }
 
-    public TableUserAdapter(List<PersonMeetingDto> list){
-        personMeetingList= list;
+    public TableUserAdapter(List<MeetingDto> list){
     }
 
 
