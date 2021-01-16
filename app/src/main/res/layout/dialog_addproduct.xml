@@ -47,7 +47,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="np 20.20"
-        android:inputType="numberSigned"
+        android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/addPriceLabel"
         app:layout_constraintTop_toBottomOf="@+id/addProductName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

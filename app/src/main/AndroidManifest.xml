@@ -13,12 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".PaymentActivity"></activity>
+        <activity
+            android:name=".PaymentsActivity"
+            android:label="@string/title_activity_payments"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".TableActivity"
             android:label="@string/title_activity_table"
-            android:windowSoftInputMode="adjustResize"
-            />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/title_activity_registration"
@@ -29,7 +33,8 @@
             android:label="@string/title_activity_navi__drawer"
             android:theme="@style/HomeFragment"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".SplashScreen"
+        <activity
+            android:name=".SplashScreen"
             android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

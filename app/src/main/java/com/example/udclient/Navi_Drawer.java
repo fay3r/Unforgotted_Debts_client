@@ -47,7 +47,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     private HomeFragment homeFragment;
     private  DrawerLayout drawer;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
     private Intent intent;
     private Bundle bundle;
     private TablesFragment mFrag;
@@ -182,6 +182,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+
         if(item.getItemId() == R.id.nav_tables){
             mFrag = new TablesFragment();
             bundle = new Bundle();
@@ -194,6 +195,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                     MeetingListDto meetingListDto = response.body();
                     System.out.println(meetingListDto.getMeetingDtoList().get(0));
                     bundle.putSerializable("DETAILS",meetingListDto);
+                    bundle.putString("USER_NICK",nick);
                     System.out.println("JESTEŚMY W NAVI_DRAWER" + bundle.getSerializable("DETAILS"));
 
                     mFrag.setArguments(bundle);

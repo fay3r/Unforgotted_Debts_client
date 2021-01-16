@@ -1,6 +1,11 @@
 package com.example.udclient.classes;
 
-public class ProductDto {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class ProductDto implements Serializable, Parcelable {
     private Integer id_product;
     private String name;
     private Double price;
@@ -21,6 +26,72 @@ public class ProductDto {
         this.date = date;
         this.time = time;
     }
+
+
+    protected ProductDto(Parcel in) {
+        if (in.readByte() == 0) {
+            id_product = null;
+        } else {
+            id_product = in.readInt();
+        }
+        name = in.readString();
+        if (in.readByte() == 0) {
+            price = null;
+        } else {
+            price = in.readDouble();
+        }
+        nick = in.readString();
+        date = in.readString();
+        time = in.readString();
+        if (in.readByte() == 0) {
+            id_meeting = null;
+        } else {
+            id_meeting = in.readInt();
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id_product == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id_product);
+        }
+        dest.writeString(name);
+        if (price == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(price);
+        }
+        dest.writeString(nick);
+        dest.writeString(date);
+        dest.writeString(time);
+        if (id_meeting == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id_meeting);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ProductDto> CREATOR = new Creator<ProductDto>() {
+        @Override
+        public ProductDto createFromParcel(Parcel in) {
+            return new ProductDto(in);
+        }
+
+        @Override
+        public ProductDto[] newArray(int size) {
+            return new ProductDto[size];
+        }
+    };
 
     public Integer getId_product() {
         return id_product;

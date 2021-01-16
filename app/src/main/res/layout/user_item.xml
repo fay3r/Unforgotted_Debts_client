@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/userNick"
-            android:layout_width="wrap_content"
+            android:layout_width="132dp"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -22,7 +22,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="24dp"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="300dp"
+            android:layout_marginEnd="247dp"
             android:layout_marginBottom="0dp"
             android:height="20dp"
             android:gravity="center"
@@ -34,17 +34,17 @@
 
         <TextView
             android:id="@+id/details"
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="292dp"
+            android:layout_marginStart="210dp"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="56dp"
+            android:layout_marginEnd="75dp"
             android:layout_marginBottom="0dp"
+            android:gravity="center"
             android:text="Details"
             android:textColor="@color/main_theme_color"
             android:textSize="15dp"
@@ -58,10 +58,10 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="347dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="33dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="331dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="49dp"
+            android:layout_marginBottom="9dp"
             android:background="@drawable/rightarrow" />
 
     </RelativeLayout>

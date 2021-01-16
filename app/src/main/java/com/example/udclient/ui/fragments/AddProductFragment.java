@@ -2,12 +2,15 @@ package com.example.udclient.ui.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.udclient.HttpSevice;
+import com.example.udclient.PaymentActivity;
 import com.example.udclient.R;
+import com.example.udclient.classes.PaymentListDto;
 import com.example.udclient.classes.ProductDto;
 import com.example.udclient.classes.ProductListDto;
 import com.example.udclient.classes.TableProductAdapter;
@@ -37,14 +42,14 @@ public class AddProductFragment extends Fragment {
     private  RecyclerView recyclerView;
     private TableProductAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private int members;
+    private int members,id_person,id_meeting;
     private String permissions;
 
-    private TextView tPaid, tExpenses,tpartCount;
-    private Button addP;
+    private TextView tPaid, tExpenses,tpartCount,costPerPer;
+    private Button addProduct,addPayment;
 
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +58,8 @@ public class AddProductFragment extends Fragment {
             productListDto = (ProductListDto) getArguments().getSerializable("PRODUCT_DATA");
             members= getArguments().getInt("NUMMEM");
             permissions = getArguments().getString("USER_PERMISSIONS");
+            id_person = getArguments().getInt("ID_PERSON");
+            id_meeting = getArguments().getInt("ID_MEETING");
         }
     }
 
@@ -81,7 +88,9 @@ public class AddProductFragment extends Fragment {
         tExpenses = root.findViewById(R.id.totalExpenses);
         tPaid = root.findViewById(R.id.paid);
         tpartCount = root.findViewById(R.id.partCount);
-        addP = root.findViewById(R.id.addProduct);
+        addProduct = root.findViewById(R.id.addProduct);
+        costPerPer = root.findViewById(R.id.restPerMembers);
+        addPayment = root.findViewById(R.id.addPayment);
 
         double sum=0;
         for (ProductDto productDto :
@@ -90,20 +99,87 @@ public class AddProductFragment extends Fragment {
         }
         tExpenses.setText(sum+"");
         tpartCount.setText(members+"");
+        costPerPer.setText(Double.toString(sum/members));
 
-        addP.setOnClickListener(new View.OnClickListener() {
+
+        addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EditText newProdName, newProdPrice;
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View mView = inflater.inflate(R.layout.dialog_addproduct, null);
+                newProdName = mView.findViewById(R.id.addProductName);
+                newProdPrice = mView.findViewById(R.id.addProductPrice);
+                builder.setView(mView).setTitle("Dodaj cosik")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                System.out.println(" id nervy "+id_person);
+                                 addProductFun(newProdName.getText().toString() ,  newProdPrice.getText().toString());
+                            }
+                        });
+                Dialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        httpSevice = retrofit.create(HttpSevice.class);
+
+        addPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent inetn = new Intent(getContext(), PaymentActivity.class);
+                Call<PaymentListDto> call = httpSevice.getMeetingsPayments(Integer.toString(id_meeting));
+                call.enqueue(new Callback<PaymentListDto>() {
+                    @Override
+                    public void onResponse(Call<PaymentListDto> call, Response<PaymentListDto> response) {
+                        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + response.code());
+                        if(response.code()==200) {
+                            PaymentListDto paymentListDto = response.body();
+                            System.out.println("w paymentach" + paymentListDto.getPaymentDtoList().get(0).getValue());
+                            inetn.putExtra("PAYMENT_DATA", paymentListDto);
+                            startActivity(inetn);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PaymentListDto> call, Throwable t) {
+
+                    }
+                });
 
             }
         });
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
-        httpSevice = retrofit.create(HttpSevice.class);
+
 
         return root;
     }
 
+    public void addProductFun(String name ,String price){
+
+        Call<Void> call = httpSevice.addProduct(name,price,Integer.toString(id_person),Integer.toString(id_meeting));
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if( response.code() == 200) {
+                    Toast.makeText(getContext(), ("Dodano " + name), Toast.LENGTH_LONG).show();
+                } else{
+                    Toast.makeText(getContext(), "zyebao", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+
+    }
 
     public void showProductDetails(ProductDto productDto){
         TextView proPrice,proNick,proDate,proTime;

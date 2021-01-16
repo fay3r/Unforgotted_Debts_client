@@ -3,6 +3,7 @@ package com.example.udclient;
 import com.example.udclient.classes.LoginDto;
 import com.example.udclient.classes.MeetingDetailsDto;
 import com.example.udclient.classes.MeetingListDto;
+import com.example.udclient.classes.PaymentListDto;
 import com.example.udclient.classes.ProductListDto;
 import com.example.udclient.classes.RegisterDto;
 
@@ -43,5 +44,11 @@ public interface HttpSevice {
 
     @POST("ud-server/add_person")
     Call<Void> addPerson(@Query("id_meeting") String id_meeting,@Query("nick") String nick);
+
+    @POST("ud-server/product")
+    Call<Void> addProduct(@Query("name") String name,@Query("price") String price,@Query("id_person") String id_person,@Query("id_meeting") String id_meeting);
+
+    @GET("ud-server/payments_meeting/{id_meeting}")
+    Call<PaymentListDto> getMeetingsPayments(@Path("id_meeting") String id_meeting);
 
 }
