@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email,password;
     private Intent intent;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
 
 
     @Override
@@ -38,8 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         loadData();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         httpSevice = retrofit.create(HttpSevice.class);
-
-
     }
 
     public void logInApp(View view) {

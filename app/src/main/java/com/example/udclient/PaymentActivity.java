@@ -32,8 +32,8 @@ public class PaymentActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private PaymentListDto paymentListDto;
     private Button blikButt;
-    private EditText blikPhone,blikValue, blikCode;
-    private String id_person,id_meeting;
+    private EditText blikPhone, blikValue, blikCode;
+    private String id_person, id_meeting;
 
     private HttpSevice httpSevice;
     private static String url = "http://192.168.0.104:8080/";
@@ -49,18 +49,16 @@ public class PaymentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         paymentListDto = (PaymentListDto) intent.getSerializableExtra("PAYMENT_DATA");
         id_meeting = intent.getStringExtra("ID_MEETING");
-        id_person= intent.getStringExtra("ID_PERSON");
-        System.out.println("@$$$$$$$$$$$$$$$$$$$$$$$$$$ "+ id_person + " dane " + id_meeting);
-        if(paymentListDto.getPaymentDtoList().size()!=0) {
+        id_person = intent.getStringExtra("ID_PERSON");
 
-            recyclerView = findViewById(R.id.recyclerView4);
-            recyclerView.setHasFixedSize(true);
-            layoutManager = new LinearLayoutManager(this);
-            adapter = new TablePaymentAdapter(paymentListDto.getPaymentDtoList());
+        recyclerView = findViewById(R.id.recyclerView4);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new TablePaymentAdapter(paymentListDto.getPaymentDtoList());
 
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(adapter);
-        }
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
 
         blikButt = findViewById(R.id.blikButton);
         blikPhone = findViewById(R.id.blikPhoneNumber);
@@ -71,16 +69,14 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (blikPhone.getText().length() == 9) {
-
-
                     View mView = inflater.inflate(R.layout.dialog_blik, null);
                     blikCode = mView.findViewById(R.id.blikCode);
                     builder.setView(mView).setTitle("Pan da Pan da")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
-                                    if(!blikCode.getText().toString().replace(" ","").equals("")){
-                                        insertPayment(blikValue.getText().toString(),id_meeting,id_person);
+                                    if (!blikCode.getText().toString().replace(" ", "").equals("")) {
+                                        insertPayment(blikValue.getText().toString(), id_meeting, id_person);
                                     }
                                 }
                             });
@@ -93,8 +89,8 @@ public class PaymentActivity extends AppCompatActivity {
         });
     }
 
-    public void insertPayment(String value,String id_meeting,String id_person){
-        Call<Void> call = httpSevice.insertPayment(new PaymentDto(Float.parseFloat(value),Integer.parseInt(id_meeting),Integer.parseInt(id_person)));
+    public void insertPayment(String value, String id_meeting, String id_person) {
+        Call<Void> call = httpSevice.insertPayment(new PaymentDto(Float.parseFloat(value), Integer.parseInt(id_meeting), Integer.parseInt(id_person)));
 
         call.enqueue(new Callback<Void>() {
             @Override
