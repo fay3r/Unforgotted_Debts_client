@@ -7,15 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.udclient.classes.LoginDto;
-import com.example.udclient.classes.MeetingDetailsDto;
 import com.example.udclient.classes.MeetingListDto;
-import com.example.udclient.classes.TableItem;
-import com.example.udclient.ui.TableActivity;
 import com.example.udclient.ui.home.HomeFragment;
 import com.example.udclient.ui.summary.SummaryFragment;
 import com.example.udclient.ui.tables.TablesFragment;
@@ -26,7 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -34,8 +28,6 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,7 +46,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     private HomeFragment homeFragment;
     private  DrawerLayout drawer;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
     Intent intent;
     Bundle bundle;
     TablesFragment mFrag;

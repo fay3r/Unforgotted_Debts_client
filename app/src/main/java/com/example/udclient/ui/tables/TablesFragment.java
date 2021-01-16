@@ -1,7 +1,6 @@
 package com.example.udclient.ui.tables;
 
 import android.app.Dialog;
-import androidx.fragment.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,18 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.udclient.HttpSevice;
-import com.example.udclient.Navi_Drawer;
 import com.example.udclient.R;
+import com.example.udclient.TableActivity;
 import com.example.udclient.UsersActivity;
 import com.example.udclient.classes.MeetingDetailsDto;
 import com.example.udclient.classes.MeetingListDto;
-import com.example.udclient.classes.RegisterDto;
 import com.example.udclient.classes.TableAdapter;
-import com.example.udclient.classes.TableItem;
-import com.example.udclient.ui.TableActivity;
-import com.example.udclient.ui.ui.main.UsersFragment;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +41,7 @@ public class TablesFragment extends Fragment {
     private Button joinTable;
     private EditText exTableCode, exTablePassword;
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.104:8080/";
+    private static String url = "http://192.168.0.121:8080/";
     private Intent intent;
     //private FragmentManager fragmentManager = getActivity().getFragmentManager();
 

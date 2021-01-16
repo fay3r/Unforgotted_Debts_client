@@ -27,4 +27,7 @@
     <string name="crate_new">Stworz</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
