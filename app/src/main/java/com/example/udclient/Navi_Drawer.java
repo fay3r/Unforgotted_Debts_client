@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.udclient.classes.MeetingListDto;
 import com.example.udclient.ui.home.HomeFragment;
@@ -141,7 +142,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        System.out.println(tableName.getText().toString() + " siema cos nie dziala"  +tablePassword.getText().toString());
+                        System.out.println(tableName.getText().toString() + " siema cos nie dziala "  +tablePassword.getText().toString());
                         Call<Void> call = httpSevice.createMeeting(tableName.getText().toString(),tablePassword.getText().toString());
                         call.enqueue(new Callback<Void>() {
                             @Override
@@ -155,6 +156,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 System.err.println(t.getMessage());
+                                Toast.makeText(Navi_Drawer.this, "Server is offline", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

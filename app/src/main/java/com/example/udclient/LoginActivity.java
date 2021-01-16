@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Map<String,String>> call, Throwable t) {
                 System.out.println("siema cos nie dziala" + t.getMessage());
+                showToast("Server is offline");
 
             }
         });
