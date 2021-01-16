@@ -13,16 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".PaymentActivity"></activity>
+        <activity android:name=".PaymentActivity">
+            android:windowSoftInputMode="adjustPan|stateHidden"
+        </activity>
         <activity
             android:name=".PaymentsActivity"
             android:label="@string/title_activity_payments"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".TableActivity"
             android:label="@string/title_activity_table"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/title_activity_registration"
