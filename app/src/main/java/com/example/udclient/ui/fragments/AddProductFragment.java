@@ -58,7 +58,7 @@ public class AddProductFragment extends Fragment {
     private SwipeRefreshLayout SRL;
 
     private HttpSevice httpSevice;
-    private static String url = "http://192.168.0.121:8080/";
+    private static String url = "http://192.168.0.104:8080/";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,7 +119,7 @@ public class AddProductFragment extends Fragment {
                 View mView = inflater.inflate(R.layout.dialog_addproduct, null);
                 newProdName = mView.findViewById(R.id.addProductName);
                 newProdPrice = mView.findViewById(R.id.addProductPrice);
-                builder.setView(mView).setTitle("Dodaj cosik")
+                builder.setView(mView).setTitle("Add product")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                             @Override
@@ -256,9 +256,9 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(getContext(), ("Dodano " + name), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), ("Product added" + name), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getContext(), "zyebao", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Empty product or price", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -296,7 +296,7 @@ public class AddProductFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int id) {
 
                         }
-                    }).setNegativeButton("Usun",
+                    }).setNegativeButton("Delete",
                     new DialogInterface.OnClickListener() {
 
                         @Override

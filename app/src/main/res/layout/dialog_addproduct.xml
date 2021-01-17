@@ -10,10 +10,11 @@
         android:id="@+id/addProdLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
-        android:text="Nazwa"
-        android:textSize="24dp"
+        android:text="Product: "
+        android:textColor="#000"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,10 +22,11 @@
         android:id="@+id/addPriceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:text="Cena"
-        android:textSize="24dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:text="Price: "
+        android:textColor="#000"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addProdLabel" />
 
@@ -32,9 +34,11 @@
         android:id="@+id/addProductName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/backgroundtextfields"
         android:ems="10"
-        android:hint="np. pizza"
+        android:hint="ex. pizza"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/addProdLabel"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,11 +47,12 @@
         android:id="@+id/addProductPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/backgroundtextfields"
         android:ems="10"
-        android:hint="np 20.20"
+        android:hint="ex 20.20"
         android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/addPriceLabel"
-        app:layout_constraintTop_toBottomOf="@+id/addProductName" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
