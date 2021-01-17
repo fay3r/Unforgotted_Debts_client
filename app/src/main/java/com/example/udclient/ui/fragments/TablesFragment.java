@@ -4,11 +4,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.udclient.HttpSevice;
 import com.example.udclient.R;
@@ -42,7 +45,8 @@ public class TablesFragment extends Fragment {
     private HttpSevice httpSevice;
     private static String url = "http://192.168.0.121:8080/";
     private Intent intent;
-    private String nick;
+    private String nick, id_person;
+    private SwipeRefreshLayout mSRL;
     //private FragmentManager fragmentManager = getActivity().getFragmentManager();
 
     @Override
@@ -51,6 +55,7 @@ public class TablesFragment extends Fragment {
         if (getArguments() != null) {
             list = (MeetingListDto) getArguments().getSerializable("DETAILS");
             nick = getArguments().getString("USER_NICK");
+            id_person =getArguments().getString("USER_ID");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ w table fragmencie "  +  nick);
         }
     }
@@ -67,6 +72,46 @@ public class TablesFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        mSRL = root.findViewById(R.id.swiperefresh);
+        mSRL.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                System.out.println("odswiezam");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Fragment mFrag = new TablesFragment();
+                        Bundle bundle = new Bundle();
+                        Call<MeetingListDto> call = httpSevice.getPersonsMeetingList(id_person);
+                        call.enqueue(new Callback<MeetingListDto>() {
+                            @Override
+                            public void onResponse(Call<MeetingListDto> call, Response<MeetingListDto> response) {
+                                list = response.body();
+                                adapter = new TableAdapter(list.getMeetingDtoList());
+                                recyclerView.setAdapter(adapter);
+                                adapter.setOnItemListener(new TableAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(int position) {
+                                        String code = list.getMeetingDtoList().get(position).getCode();
+                                        System.out.println("#########################################"+code);
+                                        goToTable(code);
+                                    }
+                                });
+                                Toast.makeText(getContext(), "Refreshed!", Toast.LENGTH_LONG).show();
+
+                            }
+                            @Override
+                            public void onFailure(Call<MeetingListDto> call, Throwable t) {
+                                System.out.println(t.getMessage());
+                                Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        mSRL.setRefreshing(false);
+                    }
+                }, 1500);
+            }
+        });
 
         adapter.setOnItemListener(new TableAdapter.OnItemClickListener() {
             @Override

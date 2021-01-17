@@ -60,4 +60,11 @@ public interface HttpSevice {
     @GET("ud-server/payments_sum_meeting/{id_meeting}")
     Call<Double> getMeetingsPayment(@Path("id_meeting") String id_meeting);
 
+    @GET("ud-server/payments_sum_person/{id_person}")
+    Call<Double> getSumPersonPayments(@Path("id_person") String id_person);
+
+    @GET("ud-server/payments_person/{id_person}")
+    Call<PaymentListDto> getPersonPayments(@Path("id_person") String id_person);
+
+
 }

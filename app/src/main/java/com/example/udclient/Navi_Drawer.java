@@ -182,7 +182,6 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-
         if(item.getItemId() == R.id.nav_tables){
             mFrag = new TablesFragment();
             bundle = new Bundle();
@@ -196,7 +195,7 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                     System.out.println(meetingListDto.getMeetingDtoList().get(0));
                     bundle.putSerializable("DETAILS",meetingListDto);
                     bundle.putString("USER_NICK",nick);
-                    System.out.println("JESTEŚMY W NAVI_DRAWER" + bundle.getSerializable("DETAILS"));
+                    bundle.putString("USER_ID",idPerson);
 
                     mFrag.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, mFrag).commit();
@@ -208,7 +207,14 @@ public class Navi_Drawer extends AppCompatActivity implements NavigationView.OnN
                 }
             });
         }
-        if(item.getItemId() == R.id.nav_summary){getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SummaryFragment()).commit();}
+        if(item.getItemId() == R.id.nav_summary){
+            Bundle bundle = new Bundle();
+            bundle.putString("ID_PERSON", idPerson);
+            bundle.putString("NAME", name);
+            bundle.putString("SURNAME", surname);
+            SummaryFragment summaryFragment =new SummaryFragment();
+            summaryFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,summaryFragment).commit();}
         if(item.getItemId() == R.id.nav_home){
             Bundle bundle1 = new Bundle();
             bundle1.putString("NAME", name);

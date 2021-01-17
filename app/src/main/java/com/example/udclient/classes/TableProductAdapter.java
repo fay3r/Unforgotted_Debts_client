@@ -67,7 +67,7 @@ public class TableProductAdapter extends RecyclerView.Adapter<TableProductAdapte
         ProductDto currentTable = productList.get(position);
 
         holder.textView.setText(currentTable.getName());;
-        holder.textView2.setText(currentTable.getPrice().toString());
+        holder.textView2.setText(currentTable.getPrice().toString() + " PLN");
         holder.textView3.setText(currentTable.getNick());
 
     }

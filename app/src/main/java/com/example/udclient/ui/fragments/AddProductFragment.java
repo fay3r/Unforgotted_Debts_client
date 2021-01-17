@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +20,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.udclient.HttpSevice;
 import com.example.udclient.PaymentActivity;
 import com.example.udclient.R;
 import com.example.udclient.classes.PaymentGetDto;
 import com.example.udclient.classes.PaymentListDto;
+import com.example.udclient.classes.PersonMeetingDto;
 import com.example.udclient.classes.ProductDto;
 import com.example.udclient.classes.ProductListDto;
 import com.example.udclient.classes.TableProductAdapter;
@@ -51,6 +54,8 @@ public class AddProductFragment extends Fragment {
     private TextView tPaid, tExpenses, tpartCount, costPerPer;
     private Button addProduct, addPayment;
     private Double sum;
+
+    private SwipeRefreshLayout SRL;
 
     private HttpSevice httpSevice;
     private static String url = "http://192.168.0.121:8080/";
@@ -101,9 +106,8 @@ public class AddProductFragment extends Fragment {
                 products) {
             sum += productDto.getPrice();
         }
-        tExpenses.setText(sum + "");
+        tExpenses.setText(sum + " PLN");
         tpartCount.setText(members + "");
-
 
 
         addProduct.setOnClickListener(new View.OnClickListener() {
@@ -131,13 +135,75 @@ public class AddProductFragment extends Fragment {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         httpSevice = retrofit.create(HttpSevice.class);
 
+        SRL = root.findViewById(R.id.swiperefresh2);
+        SRL.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                System.out.println("odswiezam");
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Call<ProductListDto> call = httpSevice.getMeetingsProducts(Integer.toString(id_meeting));
+
+                        call.enqueue(new Callback<ProductListDto>() {
+                            @Override
+                            public void onResponse(Call<ProductListDto> call, Response<ProductListDto> response) {
+                                if(response.code()==200) {
+                                    productListDto = response.body();
+                                    products = productListDto.getProductDtoList();
+                                    adapter = new TableProductAdapter(products);
+                                    recyclerView.setAdapter(adapter);
+                                    adapter.setOnItemListener(new TableProductAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(int position) {
+                                            showProductDetails(products.get(position));
+                                        }
+                                    });
+                                    sum = 0.0;
+                                    for (ProductDto productDto :
+                                            products) {
+                                        sum += productDto.getPrice();
+                                    }
+                                    tExpenses.setText(sum + "");
+                                    tpartCount.setText(members + "");
+                                    Call<Double> call2 = httpSevice.getMeetingsPayment(Integer.toString(id_meeting));
+                                    call2.enqueue(new Callback<Double>() {
+                                        @Override
+                                        public void onResponse(Call<Double> call, Response<Double> response) {
+                                            Double val = response.body();
+                                            tPaid.setText(Double.toString(val) +" PLN");
+                                            costPerPer.setText((Math.round(((sum-val )/ members)* 100.0) / 100.0)+" PLN");
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Double> call, Throwable t) {
+                                            System.out.println(t.getMessage());
+                                        }
+                                    });
+                                    Toast.makeText(getContext(), "Refreshed!", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ProductListDto> call, Throwable t) {
+                                System.out.println(t.getMessage());
+                                Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        SRL.setRefreshing(false);
+                    }
+                }, 1500);
+            }
+        });
+
         Call<Double> call = httpSevice.getMeetingsPayment(Integer.toString(id_meeting));
         call.enqueue(new Callback<Double>() {
             @Override
             public void onResponse(Call<Double> call, Response<Double> response) {
                 Double val = response.body();
-                tPaid.setText(Double.toString(val));
-                costPerPer.setText(Double.toString(Math.round(((sum-val )/ members)* 100.0) / 100.0));
+                tPaid.setText(Double.toString(val) +" PLN");
+                costPerPer.setText((Math.round(((sum-val )/ members)* 100.0) / 100.0) +" PLN");
             }
 
             @Override
@@ -216,7 +282,7 @@ public class AddProductFragment extends Fragment {
         proTime = mView.findViewById(R.id.prodTime);
 
 
-        proPrice.setText(productDto.getPrice().toString());
+        proPrice.setText(productDto.getPrice().toString() +" PLN");
         proNick.setText(productDto.getNick());
         proDate.setText(productDto.getDate());
         proTime.setText(productDto.getTime());

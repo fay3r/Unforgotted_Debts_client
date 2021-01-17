@@ -58,6 +58,7 @@ public class TableActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.navigation_home) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("TABLE_DATA",meetingDetailsDto);
+                    bundle.putInt("ID_MEETING",meetingDetailsDto.getId_meeting());
                     selectedFragment = new UsersFragment();
                     selectedFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment2,selectedFragment).commit();

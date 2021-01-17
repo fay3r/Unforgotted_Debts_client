@@ -69,7 +69,7 @@ public class TablePaymentAdapter extends RecyclerView.Adapter<TablePaymentAdapte
         PaymentGetDto currentTable = paymentList.get(position);
 
         holder.textView.setText(currentTable.getNick().toString());
-        holder.textView2.setText(currentTable.getValue().toString());
+        holder.textView2.setText(currentTable.getValue().toString() + " PLN");
         holder.textView3.setText(currentTable.getDate().toString());
         holder.textView4.setText(currentTable.getTime().toString());
 
