@@ -28,7 +28,7 @@ public interface HttpSevice {
     Call<Void> register(@Body RegisterDto registerDto);
 
     @POST("ud-server/create_meeting")
-    Call<Void> createMeeting(@Query("name") String name , @Query("password") String password);
+    Call<String> createMeeting(@Query("name") String name , @Query("password") String password);
 
     @POST("ud-server/join_meeting")
     Call<Void> joinMeeting(@Query("name") String name , @Query("password") String password);
